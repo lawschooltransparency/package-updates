@@ -64,12 +64,8 @@ runs:
       shell: bash
 
     - id: package-lock-diff
-      run: |
-        npm install -g stevelacey/lock-diff
-        echo 'diff<<EOF' >> $GITHUB_OUTPUT
-        lock-diff package-lock.json{.bak,} | sort >> $GITHUB_OUTPUT
-        echo 'EOF' >> $GITHUB_OUTPUT
-      shell: bash {0}
+      run: node "$GITHUB_ACTION_PATH/lock-diff.cjs" package-lock.json.bak package-lock.json
+      shell: bash
 
     - run: rm package-lock.json.bak
       shell: bash
